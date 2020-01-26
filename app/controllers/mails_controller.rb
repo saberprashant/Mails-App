@@ -11,25 +11,17 @@ class MailsController < ApplicationController
     if $userDetails.present? && $userDetails[:username].present? && $userDetails[:password].present?
       
       begin
-        allMails = Mail.find(:what => :last, :count => 10, :order => :desc)
+        allMails = Mail.find(:what => :last, :count => 100, :order => :desc)
         # allMails = Mail.all
       
         @mails = []
         $mails = []
-      
-        # puts "length: #{mails.length}"
-        # mail_object = Mail.read_from_string(mails)
-        # puts mail_object
     
         allMails.each do |current_mail|
           mail_object = Mail.read_from_string(current_mail)
           @mails.push(mail_object)
           # puts mail_object            # Outputs the To address 
         end
-    
-        # puts @mails.length
-        # @mails = @mails.group_by{|m| m[:subject]}
-        # puts @mails.length
     
         $mails = @mails
         @accountValid = true
@@ -47,18 +39,14 @@ class MailsController < ApplicationController
   end
 
   def view
-    # @mail = params[:json]
-    # puts $mails
     @selMailIndex = params[:index]
     @selMailIndex = @selMailIndex.to_i
     # puts $mails.class
     # puts selMailIndex.class
     @mail = $mails[@selMailIndex]
-
   end
 
   def new
-
     @isNewMail = params[:new]
     index = params[:index]
     index = index.to_i
@@ -75,40 +63,10 @@ class MailsController < ApplicationController
 
   def create
 
-    # FOR ZOHO
-    # Mail.defaults do
-    #   delivery_method :smtp,  {            
-    #     :address              => "smtp.zoho.com", 
-    #     :port                 => 465,                 
-    #     :user_name            => 'someone@somewhere.com',
-    #     :password             => 'password',         
-    #   #  :authentication        => :login,
-    #     :authentication           => :plain,
-    #     :ssl                  => true,
-    #     :tls                  => true,
-    #     :enable_starttls_auto => true    
-    #   }
-    # end
-
-    # FOR GMAIL
-    # Mail.defaults do
-    #   delivery_method :smtp, { :address    => "smtp.gmail.com",
-    #                           :port       => 587,
-    #                           :user_name  => $userDetails[:username],
-    #                           :password   => $userDetails[:password],
-    #                           :authentication => :plain,
-    #                           :enable_starttls_auto => true
-    #                         }
-    # end
-    
-
-    puts "create mail"
+    # puts "create mail"
     from = $userDetails[:username],
     to = params[:newMail][:to]
     subject = params[:newMail][:subject]
-    # email = params["email"]
-    # file = params["file"]
-    # summery = params["summery"]
     email_body = params[:newMail][:body]
     mail = Mail.new do
       from from
@@ -116,11 +74,8 @@ class MailsController < ApplicationController
       subject subject
       body email_body
     end
-    # mail.add_file(filename: file.original_filename, content: File.read(file.tempfile.path)) unless file.nil?
     mail.deliver!
     redirect_to mails_path, alert: 'Mail sent successfully'
-    # flash[:notice] = 'Mail sent!'
-    # flash.now.alert = t("Mail sent!")
 
     # render json: {message: "An email has been sent", success: true}, status: 201   
 
@@ -141,8 +96,6 @@ class MailsController < ApplicationController
   def assign_to
     selMailIndex = params[:index].to_i
     userEmail = params[:userEmail]
-    # puts selMailIndex
-    # puts userEmail
 
     if userEmail.present?
       mail = $mails[selMailIndex]
@@ -156,8 +109,6 @@ class MailsController < ApplicationController
   end
 
   def create_account
-    # puts params[:newAcc][:username].present?
-    # puts params[:newAcc].present?
 
     if params[:newAcc].present? && params[:newAcc][:username].present?
       $userDetails = {}
