@@ -1,0 +1,93 @@
+<style>
+  .mail-row {
+    /* background-color: #dddddd; */
+    border-radius: 4px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #cdcfd2;
+  }
+  .mail-row:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 0px #e9ecef;
+    -webkit-box-shadow: 0px 0px 10px 0px #e9ecef;
+    -moz-box-shadow: 0px 0px 10px 0px #e9ecef;
+    border-bottom: 2px solid gray;
+  }
+  .text {
+    display: block;
+    display: -webkit-box;
+    max-width: 400px;
+    height: 50px;
+    margin: 0 auto;
+    line-height: 1.2;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .margin-top-20 {
+    margin-top: 20px;
+  }
+  .success-msg {
+    color: green;
+    background-color: lightgreen;
+    border-radius: 3px;
+    /* padding: 10px; */
+  }
+  .grid-page {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 92vh;
+  }
+  .mails-container {
+    height: 100%;
+    overflow: auto;
+  }
+  .left-sidebar {
+    background-color: #f6f6f6;
+    padding: 30px 10px;
+    /* border-right: 1px solid #cdcfd2; */
+  }
+  .side-btn {
+    width: 100%;
+  }
+  .btn-col {
+    margin-bottom: 8px;
+  }
+  .user-row {
+    margin-bottom: 5px;
+  }
+  .header-row {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .user-title {
+    /* color: gray; */
+    margin-bottom: 20px;
+  }
+
+</style>
+
+
+<div class="grid-page">
+
+  <div class="left-sidebar">
+    <div class="col btn-col">
+      <%= link_to "All Mails", mails_path, class:'btn btn-primary side-btn' %>
+    </div>
+    <div class="col btn-col">
+      <%= link_to "All Users", users_path, class:'btn btn-primary side-btn' %>
+    </div>
+  </div>
+
+  <div class="container mails-container">
+
+    <h2 class="user-title">Editing User</h2>
+
+    <%= render 'form', user: @user %>
+
+    <br><br>
+    <%= link_to 'Show', @user, class:'btn btn-info' %> |    
+    <%= link_to 'Back', users_path, class:'btn btn-primary' %>
+
+  </div>
+</div>

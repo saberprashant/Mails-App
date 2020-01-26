@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<style>
+  .nav-custom {
+    background-image: linear-gradient(15deg,#cbd6ff 0,#e8efff 100%); !important;
+    box-shadow: 0px -1px 10px 0px gray;
+    -webkit-box-shadow: 0px -1px 10px 0px gray;
+    -moz-box-shadow: 0px -1px 10px 0px gray;
+  }
+  .logo {
+    width: 30px;
+    height: 30px;
+  }
+  .app-title {
+    color: #dd662f;
+  }
+</style>
 <html>
   <head>
     <title>MailsApp</title>
@@ -9,7 +24,65 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+
   <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light nav-custom" role="navigation">
+          <div class="">
+            <a class="navbar-brand" href="/">
+              <%= image_tag("mail.png", :alt => "kazuya logo", :class => 'logo') %>
+              Kazuya      
+            </a>
+            <div class="navbar-header">
+            </div>
+            <div class="collapse navbar-collapse">
+            <% if false %>
+              <ul class="nav navbar-nav">
+                <li class="<%= params[:controller] == 'admin/posts' ? 'active' : '' %>"><%= link_to "Home", admin_posts_path %></li>
+                <li class="<%= params[:controller] == 'admin/categories' ? 'active' : '' %>"><%= link_to "Login", admin_categories_path %></li>
+              </ul>
+            <% end %>
+            </div>
+          </div>
+    </nav>
+
+  <div class="">
     <%= yield %>
-  </body>
+  </div>
+
+<% if false %>
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="well">
+              <div id="user_nav" class="pull-right">
+                <% if current_user %>
+                  Logged in as <%= current_user.email %>.
+                  <%= link_to "Log out", admin_logout_path %>
+                <% else %>
+                  <%= link_to "log in", admin_login_path %>
+                <% end %>
+              </div>
+              <div class="clearfix"></div>
+              <!-- Alerts & Messages -->
+              <% if flash[:notice] %>
+                <div class="alert alert-success"><%= flash[:notice] %></div>
+              <% end %>
+
+              <% if flash[:alert] %>
+                <div class="alert alert-danger"><%= flash[:alert] %></div>
+              <% end %>
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+   
+    <footer>
+      <p>Copyright &copy; 2014, rBlog | <%= link_to "Frontend", root_path, target:'_blank'  %></p>
+    </footer>
+<% end %>
+
+</body>
 </html>

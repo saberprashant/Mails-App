@@ -1,0 +1,16 @@
+// Place all the styles related to the Mails controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+  .mail-row {
+    background-color: #dddddd;
+    border-radius: 3px;
+    margin-bottom: 1px;
+  }
+  .mail-row:hover {
+    cursor: pointer;
+    box-shadow: -1px 0px 10px 0px #dddddd;
+    -webkit-box-shadow: -1px 0px 10px 0px #dddddd;
+    -moz-box-shadow: -1px 0px 10px 0px #dddddd;
+  }

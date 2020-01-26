@@ -1,0 +1,130 @@
+<style>
+  .mail-row {
+    background-color: #f6f8ff !important;
+    border-radius: 4px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #cdcfd2;
+  }
+  .mail-row:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 0px #e9ecef;
+    -webkit-box-shadow: 0px 0px 10px 0px #e9ecef;
+    -moz-box-shadow: 0px 0px 10px 0px #e9ecef;
+    border-bottom: 2px solid gray;
+  }
+  .text {
+    display: block;
+    display: -webkit-box;
+    max-width: 400px;
+    height: 50px;
+    margin: 0 auto;
+    line-height: 1.2;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .margin-top-20 {
+    margin-top: 20px;
+  }
+  .success-msg {
+    color: green;
+    background-color: lightgreen;
+    border-radius: 3px;
+    /* padding: 10px; */
+  }
+  .grid-page {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 92vh;
+  }
+  .mails-container {
+    background-color: #f6f8ff !important;
+    height: 100%;
+    overflow: auto;
+    padding-top: 20px;
+  }
+  .left-sidebar {
+    background-color: #f6f6f6;
+    padding: 30px 10px;
+    /* border-right: 1px solid #cdcfd2; */
+  }
+  .side-btn {
+    width: 100%;
+  }
+  .btn-col {
+    margin-bottom: 8px;
+  }
+  .exist-title {
+    color: red;
+    padding: 15px 10px;
+    background-color: #ffd2d2;
+    margin-top: 40px;
+    border-radius: 5px;
+  }
+
+</style>
+
+
+<% if @accountValid %>
+  <div class="grid-page">
+
+  <div class="left-sidebar">
+    <div class="col btn-col">
+      <%= link_to "All Mails", mails_path, class:'btn btn-primary side-btn' %>
+    </div>
+    <div class="col btn-col">
+      <%= link_to "All Users", users_path, class:'btn btn-primary side-btn' %>
+    </div>
+  </div>
+
+  <div class="container mails-container">
+
+    <% flash.each do |type, msg| %>
+      <div class="breadcrumb success-msg">
+        <%= msg %>
+      </div>
+    <% end %>
+
+    <% if @mails.present? %>
+      <% @mails.each_with_index do |mail, index| %>
+        <%# <table> %>
+          <div class="breadcrumb row mail-row">
+            <div class="col-3">
+              <div class="">
+                From:
+                <% mail.from.each do |fromName| %> 
+                  <%= fromName %>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-6">
+              <%= mail.subject %>
+            </div>
+            <div class="col-2">
+              <%= link_to "View Mail", mails_view_path(:index => index), class:'btn btn-primary btn-sm' %>
+            </div>
+            <div class="col-1">
+              <%= link_to "Assign", mails_assign_path(:index => index), class:'btn btn-primary btn-sm' %>
+            </div>
+          </div>
+        <%# </table> %>
+      <% end %>
+      <% else %>
+        <p>No mails yet.</p>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+
+  <div class="container account-not-exist">
+    <div class="exist-title">
+      Sorry, account authentication failed!
+    </div>
+    <br><br>
+    <%= link_to "Add account again >", account_new_path, class:'btn btn-primary btn-lg' %>
+  </div>
+
+<% end %>
+
+

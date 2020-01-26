@@ -1,0 +1,99 @@
+<style>
+  .mail-row {
+    /* background-color: #dddddd; */
+    border-radius: 4px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #cdcfd2;
+  }
+  .mail-row:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 0px #e9ecef;
+    -webkit-box-shadow: 0px 0px 10px 0px #e9ecef;
+    -moz-box-shadow: 0px 0px 10px 0px #e9ecef;
+    border-bottom: 2px solid gray;
+  }
+  .text {
+    display: block;
+    display: -webkit-box;
+    max-width: 400px;
+    height: 50px;
+    margin: 0 auto;
+    line-height: 1.2;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .margin-top-20 {
+    margin-top: 20px;
+  }
+  .success-msg {
+    color: green;
+    background-color: lightgreen;
+    border-radius: 3px;
+    /* padding: 10px; */
+  }
+  .grid-page {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 92vh;
+  }
+  .mails-container {
+    height: 100%;
+    overflow: auto;
+  }
+  .left-sidebar {
+    background-color: #f6f6f6;
+    padding: 30px 10px;
+    /* border-right: 1px solid #cdcfd2; */
+  }
+  .side-btn {
+    width: 100%;
+  }
+  .btn-col {
+    margin-bottom: 8px;
+  }
+
+</style>
+
+
+
+<div class="grid-page">
+
+  <div class="left-sidebar">
+    <div class="col btn-col">
+      <%= link_to "All Mails", mails_path, class:'btn btn-primary side-btn' %>
+    </div>
+    <div class="col btn-col">
+      <%= link_to "All Users", users_path, class:'btn btn-primary side-btn' %>
+    </div>
+  </div>
+
+  <div class="container mails-container">
+    <div class="margin-top-20">
+      <%= form_for :newMail, url: "/mails/create" do |f| %>
+        <div class="form-group">
+          <%= f.label :to, "To" %><br>
+          <%= f.text_field :to, :value => @mail.from[0], class:'form-control' %>
+        </div>
+        <% if false %>
+          <div class="form-group">
+            <%= f.label :cc, "CC" %><br>
+            <%= f.text_field :cc, class:'form-control' %>
+          </div>
+        <% end %>
+        <div class="form-group">
+          <%= f.label :subject, "Subject" %><br>
+          <%= f.text_field :subject, :value => @mail.subject, class:'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :body, "Body" %><br>
+          <%= f.text_area :body, class:'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Send", class:'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

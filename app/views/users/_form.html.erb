@@ -1,0 +1,136 @@
+
+<style>
+  .mail-row {
+    /* background-color: #dddddd; */
+    border-radius: 4px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #cdcfd2;
+  }
+  .mail-row:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 0px #e9ecef;
+    -webkit-box-shadow: 0px 0px 10px 0px #e9ecef;
+    -moz-box-shadow: 0px 0px 10px 0px #e9ecef;
+    border-bottom: 2px solid gray;
+  }
+  .text {
+    display: block;
+    display: -webkit-box;
+    max-width: 400px;
+    height: 50px;
+    margin: 0 auto;
+    line-height: 1.2;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .margin-top-20 {
+    margin-top: 20px;
+  }
+  .success-msg {
+    color: green;
+    background-color: lightgreen;
+    border-radius: 3px;
+    /* padding: 10px; */
+  }
+  .grid-page {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 92vh;
+  }
+  .mails-container {
+    height: 100%;
+    overflow: auto;
+  }
+  .left-sidebar {
+    background-color: #f6f6f6;
+    padding: 30px 10px;
+    /* border-right: 1px solid #cdcfd2; */
+  }
+  .side-btn {
+    width: 100%;
+  }
+  .btn-col {
+    margin-bottom: 8px;
+  }
+  .user-row {
+    margin-bottom: 5px;
+  }
+  .header-row {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .user-title {
+    /* color: gray; */
+    margin-bottom: 20px;
+  }
+  .error-title {
+    color: red;
+  }
+  .error-inst {
+    color: gray;
+  }
+
+</style>
+
+
+<div class="">
+    <%= form_with(model: user, local: true) do |form| %>
+      <% if user.errors.any? %>
+        <div id="error_explanation">
+          <h6 class="error-title"><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h6>
+
+          <ul class="error-inst">
+            <% user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= form.label :name %><br>
+        <%= form.text_field :name, class:'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :email %><br>
+        <%= form.text_field :email, class:'form-control'  %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label 'Role' %><br>
+
+        <%# experimenting with select tag %>
+        <% if false%>
+        <%= select_tag "role", options_for_select([ "Employee", "Admin" ], "Employee") %>
+        <%= form.select :role, options_for_select([['Admin', 1] , ['Employee', 2]]) %>
+        <%= form.select :role, [ "Employee", "Admin" ], :prompt => 'Select One' %>
+        <%= form.text_field :userRole %>
+        <% end %>
+
+        <%= form.select(:userRole, ['Admin', 'Employee'], {}, { :class => 'form-control' }) %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :password %><br>
+        <%= form.password_field :password, class:'form-control'  %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :password_confirmation %><br>
+        <%= form.password_field :password_confirmation, class:'form-control'  %>
+      </div>
+
+      <div class="actions btn btn-primary">
+        <%= form.submit %>
+      </div>
+    <% end %>
+</div>
+
+
+
+
+
+
